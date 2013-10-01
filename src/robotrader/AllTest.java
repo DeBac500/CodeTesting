@@ -18,6 +18,9 @@ public class AllTest {
 		suite.addTestSuite(robotrader.trader.impl.junit.CostAverageTraderTest.class);
 		suite.addTestSuite(robotrader.trader.impl.junit.FollowerTest.class);
 		suite.addTestSuite(robotrader.trader.impl.junit.KeeperTest.class);
+		suite.addTestSuite(robotrader.trader.impl.junit.StreakFollowerTest.class);
+		suite.addTestSuite(robotrader.trader.impl.junit.TurningPointTraderTest.class);
+		suite.addTestSuite(robotrader.trader.impl.junit.WinFollowerTest.class);
 		
 		
 		//$JUnit-END$

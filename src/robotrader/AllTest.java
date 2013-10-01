@@ -1,18 +1,27 @@
 package robotrader;
 
+
+import robotrader.trader.junit.XmlTraderLoaderTest;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-public class AllTest extends TestSuite{
+public class AllTest {
+
+	public static Test suite() {
+		TestSuite suite = new TestSuite("Test for robotrader");
+		//$JUnit-BEGIN$
 	
-	public static Test suite(){
-		TestSuite mys = new TestSuite("Robotrader Test Suite");
-		mys.addTestSuite(robotrader.trader.impl.junit.CautiousStreakFollowerTest.class);
-		mys.addTestSuite(robotrader.trader.junit.XmlTraderLoaderTest.class);
-		return mys;
+		
+		suite.addTestSuite(XmlTraderLoaderTest.class);
+		
+		suite.addTestSuite(robotrader.trader.impl.junit.CautiousStreakFollowerTest.class);
+		suite.addTestSuite(robotrader.trader.impl.junit.CostAverageTraderTest.class);
+		suite.addTestSuite(robotrader.trader.impl.junit.FollowerTest.class);
+		suite.addTestSuite(robotrader.trader.impl.junit.KeeperTest.class);
+		
+		
+		//$JUnit-END$
+		return suite;
 	}
 
-	public static void main(String[] args){
-		junit.textui.TestRunner.run(robotrader.AllTest.class);
-	}
 }

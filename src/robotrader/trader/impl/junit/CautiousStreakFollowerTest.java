@@ -44,9 +44,9 @@ public class CautiousStreakFollowerTest extends TestCase {
 			a.setProperty("abc", "46");
 			assertFalse(a.getProperty("abs").equals("46"));
 			
-			a.setProperty("MAXRISK", "115");
-			a.setMaxRisk(115);
-			assertTrue(a.getProperty("MAXRISK").equals("115"));
+			a.setProperty("MAXRISK", "0.15");
+			a.setMaxRisk(0.15f);
+			assertTrue(a.getProperty("MAXRISK").equals("0.15"));
 			
 			
 			

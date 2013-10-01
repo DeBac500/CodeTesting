@@ -39,7 +39,7 @@ public class FollowerTest extends TestCase {
 			assertFalse(a.getName().equals("HI"));
 			assertTrue(a.getName().equals("Follower"));
 			assertTrue(a.toString().equals("Follower"));
-			a.update();
+			//a.update();
 			
 		}
 		catch(Exception e)

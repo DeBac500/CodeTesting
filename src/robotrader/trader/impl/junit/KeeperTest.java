@@ -41,7 +41,7 @@ public class KeeperTest extends TestCase {
 			assertFalse(a.getName().equals("HI"));
 			assertTrue(a.getName().equals("Keeper"));
 			assertTrue(a.toString().equals("Keeper"));
-			a.update();
+			//a.update();
 			
 		}
 		catch(Exception e)

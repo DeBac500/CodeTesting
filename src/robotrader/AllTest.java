@@ -7,6 +7,7 @@ public class AllTest extends TestSuite{
 	
 	public static Test suite(){
 		TestSuite mys = new TestSuite("Robotrader Test Suite");
+		mys.addTestSuite(robotrader.trader.impl.junit.CautiousStreakFollowerTest.class);
 		mys.addTestSuite(robotrader.trader.junit.XmlTraderLoaderTest.class);
 		return mys;
 	}

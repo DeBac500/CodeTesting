@@ -1,0 +1,24 @@
+<h2>robotrader</h2>
+
+<h3>Features:</h3>
+
+<UL>
+<LI>Automatic Technical trading testing and validation
+<LI>Graphical interface with charts and reports to compare trading techniques
+<LI>Flexible to implement different trading techniques in Java extending AbstractTrader
+<LI>Technical indicators comparison : MFI, RSI, Moving average, De Marker, Williams %R, ROC
+<LI>Web historic quotes downloading (might not work with all firewalls)
+</UL>
+
+<h3>How it works</h3>
+
+<ul>
+<li>Historic data for an instrument is loaded
+<li>Trader agents are objects implementing AbstractTrader
+<li>Trader agents are loaded as declared in traders.xml
+<li>The engine iterates chronogically on the prices and at each steps
+calls the update method og the trader agents
+<li>In the update method trader agents have the possibility to query the current price
+<li>In the update method trader agents have the possibility place order that will be processed
+at the next iteration with the market price.
+</ul>

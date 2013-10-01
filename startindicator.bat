@@ -1,0 +1,1 @@
+java -cp conf/;dist/robotrader.jar;lib/jakarta-regexp-1.4.jar;lib/jcommon-1.0.0.jar;lib/joone-engine.jar;lib/junit-3.8.1.jar;lib/log4j-1.2.12.jar;lib/nanoxml-2.2.3.jar;lib/OpenForecast-0.4.0.jar;lib/weka.jar robotrader.market.indicator.gui.IndicatorPanelMain conf/tickers.txt conf/quotes.xml conf/traders.xml

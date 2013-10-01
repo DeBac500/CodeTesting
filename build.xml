@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="robotrader" default="makejar" basedir=".">
+	<property name="src" value="src"/>
+	<property name="lib" value="lib"/>
+	<property name="dist" value="dist"/>
+	<property name="build" value="build"/>
+	
+	<!-- use this target as dependance when you get a classic compiler error -->
+	<target name="properties" if="eclipse.running">
+		<property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+	</target>
+
+	<target name="makejar" depends="properties">
+		<!-- timestamp -->
+		<tstamp/>
+		<!-- create build directory -->
+		<mkdir dir="${build}"/>
+		<!-- compile -->
+		<javac srcdir="${src}" destdir="${build}">
+			<classpath>
+				<pathelement location="${lib}/jakarta-regexp-1.4.jar"/>
+				<pathelement location="${lib}/jcommon-1.0.0.jar"/>	
+				<pathelement location="${lib}/jfreechart-1.0.1.jar"/>
+				<pathelement location="${lib}/joone-engine.jar"/>
+				<pathelement location="${lib}/junit-3.8.1.jar"/>	
+				<pathelement location="${lib}/log4j-1.2.12.jar"/>
+				<pathelement location="${lib}/nanoxml-2.2.3.jar"/>
+				<pathelement location="${lib}/OpenForecast-0.4.0.jar"/>
+				<pathelement location="${lib}/weka.jar"/>		
+			</classpath>
+		</javac>
+		<!--  copy standard configuration files -->
+		<copy file="conf/robotrader.properties" todir="${build}"/>
+		<copy file="conf/translation.properties" todir="${build}"/>
+		<copy file="conf/default.properties" todir="${build}"/>
+		<copy todir="${build}/img">
+		    <fileset dir="conf/img"/>
+		</copy>
+			
+		<!-- create distribution directory -->
+		<mkdir dir="${dist}/"/>	
+		<!-- create jar -->
+		<jar jarfile="${dist}/robotrader.jar" basedir="${build}"/>
+		<!-- clean up build -->
+		<delete dir="${build}"/>
+		<!-- echo -->
+		<echo message="Successfully build"/>
+	</target>
+	
+	<target name="clean">
+		<!-- delete directories -->
+		<delete dir="${build}"/>
+		<delete dir="${dist}"/>
+	</target>
+</project>

@@ -1,0 +1,556 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+"http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
+<book>
+  <title>(J)Robotrader Manual 0.2.8</title>
+
+  <bookinfo>
+    <date>10/12/2005</date>
+  </bookinfo>
+
+  <preface>
+    <title>Objectives</title>
+
+    <para>The objective of the robotrader is to create a simple simulated
+    automated trading system using technical indicators, machine learning
+    methods and other well-known trading strategies. The scope is currently
+    limited to trading methods that base their decisions only on historical
+    pricing information. The pricing information is extracted from Yahoo!
+    Finance but it is our intention to include other data providers in the
+    future.</para>
+  </preface>
+
+  <chapter>
+    <title>Introduction</title>
+
+    <section>
+      <title>Intended Audience</title>
+
+      <para>The robotrader is a java application that can be used by any
+      investor who is interested in the results of technical trading
+      methods.</para>
+    </section>
+  </chapter>
+
+  <chapter>
+    <title>Installation</title>
+
+    <para>Download the latest version from <ulink
+    url="http://sourceforge.net/projects/robotrader">SourceForge</ulink>.
+    Extract the archive file to your favourite directory. Edit the
+    configuration files as required. Start either the GUI or the command line
+    tool.</para>
+
+    <section>
+      <title>Configuration files</title>
+
+      <para>The traders xml file configures the automated traders that are
+      competing against each other. The current default traders file can be
+      found under <filename>conf/traders.xml</filename>. The first line of the
+      file denotes the version of the xml and the encoding of the characters
+      as follows</para>
+
+      <para><sgmltag>&lt;?xml version="1.0"
+      encoding="UTF-8"?&gt;</sgmltag></para>
+
+      <para>The <sgmltag>&lt;traders&gt; &lt;/traders&gt;</sgmltag> xml tags
+      indicate the start and the end of the trader xml elements. Each of the
+      traders is denoted with the <sgmltag>&lt;trader class="[full java class
+      name]"/&gt;</sgmltag> with the class attribute pointing to the actual
+      java class name. This suffices to include the trader within the list of
+      traders that are to compete against each other. However, in many cases
+      further properties can be set to configure some of the parameters of
+      each trader, such as the length of the period of historic prices to
+      include for the decision making. These properties are added as
+      follows</para>
+
+      <para><sgmltag>&lt;property key="[key]"
+      value="[value]"/&gt;</sgmltag></para>
+    </section>
+  </chapter>
+
+  <chapter>
+    <title>Simple Automated Traders</title>
+
+    <para>The traders below follow simple trading strategies</para>
+
+    <section>
+      <title>Keeper
+      (<classname>robotrader.trader.example.Keeper</classname>)</title>
+
+      <para>The Keeper is the simplest of all traders. It invests all of its
+      funds in the stock at the start of the trading period and keeps (hence
+      Keeper) the acquired positions until the end of the trading period. The
+      Keeper is a copy of the performance of the underlying instrument. Any
+      other technical trader should beat the Keeper trader in order to beat
+      the market.</para>
+    </section>
+
+    <section>
+      <title>Follower
+      (<classname>robotrader.trader.example.Follower</classname>)</title>
+
+      <para>The Follower, as the name suggests, follows the streaks of the
+      underlying instrument as long as the price is non-decreasing. Whenever
+      the price goes down, the positions in the stock are sold.</para>
+    </section>
+
+    <section>
+      <title>Win Follower
+      (<classname>robotrader.trader.example.WinFollower</classname>)</title>
+
+      <para>The WinFollower invests all the funds in the instrument when the
+      price goes up and keeps the positions until a minimum percentage of
+      profit is made. In that case, the stock is sold. The same situation
+      arises when a maximum loss percentage is encountered as all positions
+      are sold in this case as well. The default percentages are 10% for
+      minimum profit and 5% for maximum loss.</para>
+    </section>
+
+    <section>
+      <title>Streak Follower
+      (<classname>robotrader.trader.example.StreakFollower</classname>)</title>
+
+      <para>The StreakFollower buys or sells all its position in the
+      investment whenever the direction of the streak remains constant for a
+      minimum number of streaks. The trader therefore buys the stock when a
+      minimum number of streaks with increasing prices are encountered and
+      sells the positions when a minimum number of streaks with decreasing
+      prices for the stock are found. The default number of up streaks is 3
+      and down streaks is 0.</para>
+    </section>
+
+    <section>
+      <title>Cautious Streak Follower
+      (<classname>robotrader.trader.example.CautiousStreakFollower</classname>)</title>
+
+      <para>The CautiousStreakFollower is similar to the StreakFollower,
+      however, instead of spending all its cash on the stock when the minimum
+      number of up streaks is encountered, only a percentage of the cash is
+      spend. The default percentage is 50%.</para>
+    </section>
+
+    <section>
+      <title>Turning Point Trader
+      (<classname>robotrader.trader.example.TurningPointTrader</classname>)</title>
+
+      <para>The Turning Point Trader tries to determine the turning points of
+      a time series by very simple means. It employs three levels</para>
+
+      <para><itemizedlist>
+          <listitem>
+            <para>Buying Level: Is a certain percentage above the minimum
+            price encountered during a period</para>
+          </listitem>
+        </itemizedlist><itemizedlist>
+          <listitem>
+            <para>Selling Level 1: Is a certain percentage below the maximum
+            price encountered over the period</para>
+          </listitem>
+        </itemizedlist><itemizedlist>
+          <listitem>
+            <para>Selling Level 2: Is a certain percentage above the buy
+            level</para>
+          </listitem>
+        </itemizedlist>The trader buys the shares of the instrument whenever
+      the current price is above the buy level but below both sell levels.
+      When the price falls below the first sell level and the buy level is
+      below that sell level, the stock is sold. Furthermore, if the price is
+      above the second sell level, the stock is also sold.</para>
+    </section>
+
+    <section>
+      <title>Cost Average Trader
+      (<classname>robotrader.trader.example.TurningPointTrader</classname>)</title>
+
+      <para>The cost average trader spreads its funds evenly over the entire
+      trading period in constant intervals. It is supposed to resemble the
+      trader that invests the same amount of cash into the same stock each
+      week/ month/ quarter or year.</para>
+    </section>
+  </chapter>
+
+  <chapter>
+    <title>Technical Indicators</title>
+
+    <para>The following traders are based on popular technical
+    indicators.</para>
+
+    <section>
+      <title>DeMarker
+      (<classname>robotrader.trader.indicator.DeMarkerTrader</classname>)</title>
+
+      <para>Demarker Technical Indicator is based on the comparison of the
+      period maximum with the previous period maximum. If the current period
+      (bar) maximum is higher, the respective difference between the two will
+      be registered. If the current maximum is lower or equaling the maximum
+      of the previous period, the naught value will be registered. The
+      differences received for N periods are then summarized. The received
+      value is used as the numerator of the DeMarker and will be divided by
+      the same value plus the sum of differences between the price minima of
+      the previous and the current periods (bars).</para>
+
+      <para>If the current price minimum is greater than that of the previous
+      bar, the naught value will be registered. When the indicator falls below
+      30, the bullish price reversal should be expected. When the indicator
+      rises above 70, the bearish price reversal should be expected. If you
+      use periods of longer duration, when calculating the indicator, you’ll
+      be able to catch the long term market tendency. Indicators based on
+      short periods let you enter the market at the point of the least risk
+      and plan the time of transaction so that it falls in with the major
+      trend.</para>
+    </section>
+
+    <section>
+      <title>Moving Average Convergence Divergence (MACD)
+      (<classname>robotrader.trader.indicator.MACDTrader</classname>)</title>
+
+      <para>Moving Average Convergence/Divergence is the next trend-following
+      dynamic indicator. It indicates the correlation between two price moving
+      averages. The Moving Average Convergence/Divergence Technical Indicator
+      is the difference between a 26-period and 12-period Exponential Moving
+      Average (EMA).</para>
+
+      <para>In order to clearly show buy/sell opportunities, a so-called
+      signal line (9-period indicators` moving average) is plotted on the MACD
+      chart. The MACD proves most effective in wide-swinging trading
+      markets.</para>
+
+      <para>There are three popular ways to use the Moving Average
+      Convergence/Divergence:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>crossovers</para>
+        </listitem>
+
+        <listitem>
+          <para>overbought/oversold conditions, and</para>
+        </listitem>
+
+        <listitem>
+          <para>divergences</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>The basic MACD trading rule is to sell when the MACD falls below
+      its signal line. Similarly, a buy signal occurs when the Moving Average
+      Convergence/Divergence rises above its signal line. It is also popular
+      to buy/sell when the MACD goes above/below zero.</para>
+
+      <para>The MACD is also useful as an overbought/oversold indicator. When
+      the shorter moving average pulls away dramatically from the longer
+      moving average (i.e., the MACD rises), it is likely that the security
+      price is overextending and will soon return to more realistic
+      levels.</para>
+
+      <para>An indication that an end to the current trend may be near occurs
+      when the MACD diverges from the security. A bullish divergence occurs
+      when the Moving Average Convergence/Divergence indicator is making new
+      highs while prices fail to reach new highs. A bearish divergence occurs
+      when the MACD is making new lows while prices fail to reach new lows.
+      Both of these divergences are most significant when they occur at
+      relatively overbought/oversold levels.</para>
+    </section>
+
+    <section>
+      <title>Money Flow Index
+      (<classname>robotrader.trader.indicator.MFITrader</classname>)</title>
+
+      <para>The Money Flow Index (MFI) is a momentum indicator that is similar
+      to the Relative Strength Index (RSI) in both interpretation and
+      calculation. However, MFI is a more rigid indicator in that it is
+      volume-weighted, and is therefore a good measure of the strength of
+      money flowing in and out of a security. It compares "positive money
+      flow" to "negative money flow" to create an indicator that can be
+      compared to price in order to identify the strength or weakness of a
+      trend. Like the RSI, the MFI is measured on a 0 - 100 scale and is often
+      calculated using a 14 day period. The "flow" of money is the product of
+      price and volume and shows the demand for a security and a certain
+      price. The money flow is not the same as the Money Flow Index but rather
+      is a component of calculating it. So when calculating the money flow, we
+      first need to find the average price for a period. Since we are often
+      looking at a 14-day period, we will calculate the typical price for a
+      day and use that to create a 14-day average.</para>
+
+      <equation>
+        <graphic fileref="MFI-typprice.png" />
+      </equation>
+
+      <para>Money Flow = (Typical Price) x (Volume) The MFI compares the ratio
+      of "positive" money flow and "negative" money flow. If typical price
+      today is greater than yesterday, it is considered positive money. For a
+      14-day average, the sum of all positive money for those 14 days is the
+      positive money flow. The MFI is based on the ratio of positive/negative
+      money flow (Money Ratio).</para>
+
+      <equation>
+        <graphic fileref="MFI-moneyratio.png" />
+      </equation>
+
+      <para></para>
+
+      <equation>
+        <graphic fileref="MFI-mfiindex.png" />
+      </equation>
+
+      <para>The MFI can be interpreted much like the RSI in that it can signal
+      divergences and overbought/oversold conditions. Positive and negative
+      divergences between the stock and the MFI can be used as buy and sell
+      signals respectively, for they often indicate the imminent reversal of a
+      trend. If the stock price is falling, but positive money flow tends to
+      be greater than negative money flow, then there is more volume
+      associated with daily price rises than with the price drops. This
+      suggests a weak downtrend that threatens to reverse as money flowing
+      into the security is "stronger" than money flowing out of it. As with
+      the RSI, the MFI can be used to determine if there is too much or too
+      little volume associated with a security. A stock is considered
+      "overbought" if the MFI indicator reaches 80 and above (a bearish
+      reading). On the other end of the spectrum, a bullish reading of 20 and
+      below suggests a stock is "oversold".</para>
+    </section>
+
+    <section>
+      <title>Relative Strength Index
+      (<classname>robotrader.trader.indicator.RSITrader</classname>)</title>
+
+      <para>Developed by J. Welles Wilder and introduced in his 1978 book, New
+      Concepts in Technical Trading Systems, the Relative Strength Index (RSI)
+      is an extremely useful and popular momentum oscillator. The RSI compares
+      the magnitude of a stock's recent gains to the magnitude of its recent
+      losses and turns that information into a number that ranges from 0 to
+      100. It takes a single parameter, the number of time periods to use in
+      the calculation. In his book, Wilder recommends using 14 periods. The
+      RSI's full name is actually rather unfortunate as it is easily confused
+      with other forms of Relative Strength analysis such as John Murphy's
+      "Relative Strength" charts and IBD's "Relative Strength" rankings. Most
+      other kinds of "Relative Strength" stuff involve using more than one
+      stock in the calculation. Like most true indicators, the RSI only needs
+      one stock to be computed. In order to avoid confusion, many people avoid
+      using the RSI's full name and just call it "the RSI."</para>
+
+      <equation>
+        <graphic fileref="rsi-formula1.gif" />
+      </equation>
+    </section>
+  </chapter>
+
+  <chapter>
+    <title>Machine Learning Methods</title>
+
+    <para>These traders that employ machine learning algorithms for
+    time-series forecasting.</para>
+
+    <section>
+      <title>Regression
+      (<classname>robotrader.trader.machinelearning.RegressionTrader</classname>)</title>
+
+      <para>The linear regression trader is based on the single variable
+      linear regression forecasting model from <ulink
+      url="http://openforecast.sourceforge.net">Openforecast</ulink>. The
+      trader tries to fit the training data to a straight line by minimising
+      the mean sum of the squared errors between the line and the data.</para>
+    </section>
+
+    <section>
+      <title>Polynomial Regression
+      (<classname>robotrader.trader.machinelearning.PolynomialRegressionTrader</classname>)</title>
+
+      <para>The linear regression trader is based on the single variable
+      ploynomial regression forecasting model from <ulink
+      url="http://openforecast.sourceforge.net">Openforecast</ulink>. Works in
+      a similar fashion to the regression trader, however, it tries to fit the
+      training data to a polynomial function.</para>
+    </section>
+
+    <section>
+      <title>Neural Network
+      (<classname>robotrader.trader.machinelearning.JooneNeuralNetworkTrader</classname>)</title>
+
+      <para>The neural network forecasting trader is based on the Java
+      Object-Oriented Neural Network Engine <ulink
+      url="http://joone.sourceforge.net">Joone</ulink>. The architecture can
+      be summarised as follows: The training data is normalised and then fed
+      into a delay layer which stores up to <code>taps+1</code> previous
+      prices. These prices are then forwarded to the sigmoid layers of the
+      neural network. The teacher compares the output of the network with the
+      calculated turning points and the errors are fed back to the network to
+      facilitate learning. A turning point exists whenever a minimum change
+      percentage is encountered for the price time series. The learning
+      process is repeated <code>epoch</code> times.</para>
+    </section>
+  </chapter>
+
+  <chapter>
+    <title>Main Graphical User Interface</title>
+
+    <para>When you run the startGui.bat, the following window appears. You can
+    either scroll the buttons on the left-hand side which work in a similar
+    fashion to MS Outlook. Alternatively, you can choose your selection from
+    the menu bar at the top.</para>
+
+    <figure>
+      <title>The Start Window</title>
+
+      <screenshot>
+        <screeninfo>The start window</screeninfo>
+
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="robotrader_start.JPG" scale="80" scalefit="1" />
+          </imageobject>
+        </mediaobject>
+      </screenshot>
+    </figure>
+
+    <para>When you click on the Simulation -&gt; View button (or select the
+    menu) you get a window similar to the one below. The quote file specifies
+    the ticker used by Yahoo finance. In this instance, the COKE is modelled.
+    The trader file denotes the location of the xml file which specifies all
+    the traders to include together with their parameters.</para>
+
+    <figure>
+      <title>The Dates Dialog</title>
+
+      <screenshot>
+        <screeninfo></screeninfo>
+
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="robotrader_dates.jpg" />
+          </imageobject>
+        </mediaobject>
+      </screenshot>
+    </figure>
+
+    <figure>
+      <title>The View Window (for COKE)</title>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="robotrader_coke.jpg" scale="80" scalefit="1" />
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+    <figure>
+      <title>The Quotes Panel</title>
+
+      <screenshot>
+        <screeninfo></screeninfo>
+
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="robotrader_quotes.jpg" scale="80" />
+          </imageobject>
+        </mediaobject>
+      </screenshot>
+    </figure>
+
+    <figure>
+      <title>Load Traders Panel</title>
+
+      <screenshot>
+        <screeninfo></screeninfo>
+
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="robotrader_loadtraders.jpg" scale="80" />
+          </imageobject>
+        </mediaobject>
+      </screenshot>
+    </figure>
+
+    <figure>
+      <title>Edit Traders Dialog</title>
+
+      <screenshot>
+        <screeninfo></screeninfo>
+
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="robotrader_edittrader.jpg" />
+          </imageobject>
+        </mediaobject>
+      </screenshot>
+    </figure>
+
+    <figure>
+      <title>Report Panel</title>
+
+      <screenshot>
+        <screeninfo></screeninfo>
+
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="robotrader_reports.jpg" scale="80" />
+          </imageobject>
+        </mediaobject>
+      </screenshot>
+    </figure>
+  </chapter>
+
+  <chapter>
+    <title>Examples of Trading Performances</title>
+
+    <para>To be done.</para>
+  </chapter>
+
+  <chapter>
+    <title>Indicator Panel</title>
+
+    <para>The indicator panel displays the latest trading decisions of the
+    traders. It requires three parameters, the path where all the tickers can
+    be found (e.g. conf/), the path to the master quote file (e.g.
+    conf/quotes.xml) and the path to the traders (e.g.
+    conf/traders.xml).</para>
+
+    <para><code>java robotrader.indicator.gui.IndicatorPanelMain tickerspath
+    masterquotefilepath tradersfilepath</code></para>
+
+    <figure>
+      <title>Indicator Panels</title>
+
+      <screenshot>
+        <screeninfo>The indicator panel</screeninfo>
+
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="robotrader_indicator.JPG" scale="80" />
+          </imageobject>
+        </mediaobject>
+      </screenshot>
+    </figure>
+  </chapter>
+
+  <chapter>
+    <title>Command Line Tools</title>
+
+    <para>There are two command line tools that facilitate the batch
+    processing of the automated traders as well as automatic price updates
+    from Yahoo! Finance.</para>
+
+    <section>
+      <title>Main Console</title>
+
+      <para>The main console runs the trading algorithms included in a trader
+      configuration file against either a single instrument or all instruments
+      in batch mode. It requires three command line options that need to be
+      given prior to execution.</para>
+
+      <para><code>java robotrader.ConsoleMain xmlmasterquotefile xmltraderfile
+      instrument|-all</code></para>
+    </section>
+
+    <section>
+      <title>Automatic Price Updates</title>
+
+      <para>The automatic price updater takes a list of tickers and the master
+      quote file name and updates the prices of the instruments until the most
+      recent available at Yahoo! Finance.</para>
+
+      <para><code>java robotrader.quotedb.web.UpdateQuotesMain tickersfilepath
+      xmlmasterquotefile [loadfrom US(default)|FR]</code></para>
+    </section>
+  </chapter>
+</book>

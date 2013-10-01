@@ -1,0 +1,16 @@
+<h3>Command-line tool arguments</h3>
+
+Launch the following on the command line:
+<pre>java robotrader.ConsoleMain xmlmasterquotefile xmltraderfile instrument|-all
+</pre>
+<br>
+Arguments:
+<ol>
+<li>xmlmasterquotefile: xml file containing the path to the quotes for each 
+instrument and the period available for the quotes 
+<li>xmltraderfile: xml file containing the list of Trader objects to use for
+the computation with their parameters
+<li>instrument|-all: the instrument abbreviation as stores in the quotes data
+base, use -all to launch a computation for all instruments available in the
+quotes database and cumulate results of all computations
+</ol>				

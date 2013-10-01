@@ -1,0 +1,41 @@
+<h3>Installation</h3>
+<OL TYPE="1">
+<LI>download the zip package from sourceforge
+<LI>unzip everything
+<LI>you are ready to start
+</OL>
+
+<h3>Quick start</h3>
+<OL TYPE="1">
+<LI>launch startgui.bat
+<LI>click on the 'quotedb' button a quote list appears containing one GE entry.
+<LI>select the entry and click on ok.
+<LI>click on the 'load traders' button and open 'conf/traders.xml'
+<LI>click on the 'start' button robotrader is running...
+</OL>
+
+<h3>Configuration files</h3>
+
+
+<h4>Quotes file (conf/quotes.xml)<h4>
+<pre>
+ &lt;quotes basepath="conf/"&gt;
+ 	&lt;instrument code="GE" startdate="19700202" enddate="20021018" filename="GE.txt" /&gt; 
+ &lt;/quotes&gt;
+</pre> 
+<h4>Traders file (conf/traders.xml)<h4>
+<pre>
+&lt;?xml version="1.0" encoding="UTF-8" ?&gt; 
+&lt;traders&gt;
+	&lt;trader class="robotrader.trader.indicator.MFITrader"&gt;
+  		&lt;property key="PERIOD" value="15" /&gt; 
+  		&lt;property key="BUYLVL" value="20" /&gt; 
+  		&lt;property key="SELLLVL" value="80" /&gt; 
+  	&lt;/trader&gt;
+&lt;/traders&gt;
+</pre>
+<h4>Tickers file (conf/tickers.txt)<h4>
+one line for each instrument:<br>
+MSFT<br>
+GE<br>
+

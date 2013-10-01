@@ -1,0 +1,33 @@
+<h3>Creating your first trader agent</h3>
+<UL TYPE="DECIMAL">
+<LI>create the YourTrader class extending robotrader.trader.AbstractTrader
+<LI>implement public String getName() method returning the unique trader name 
+(e.g. YourTrader)
+<LI>implement public void init(), if needed. This method is called before any 
+call to the update() method
+<LI>implement public void update(). This is the core method that is called by 
+the robotrader engine after the price has been updated (new day). In this 
+method you must place your code to insert orders(using the addAmountOrder or 
+addQuantityOrder ) given the price (getPrice method) of the underlying asset.  
+<LI>that s it...
+</UL>
+<p>Note a simple example is robotrader.trader.example.Keeper the 
+simplest implementation of a trader agent, it buys whenever it has
+cash available.</p>
+
+<h3>Configuring robotrader to use YourTrader</h3>
+<UL TYPE="DECIMAL">
+<LI>Add the path to YourTrader in the classpath : in startgui.bat if
+you are using this batch to start the application
+<LI>In the traders.xml file (in the conf/ directory) add a trader entry
+with the class attribute being the complete class name of YourTrader(package.class) 
+<LI>Launch robotrader: with startgui.bat ... YourTrader is competing with others...
+</UL>
+
+<h3>Clear your quote DB</h3>
+<UL TYPE="DECIMAL">
+<LI>Start the main application for robotrader GUI
+<LI>Click on the 'quote DB' menu button
+<LI>Select every instrument name and click remove
+<LI>Confirm the removal, you are done.
+</UL>

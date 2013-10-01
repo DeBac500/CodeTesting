@@ -1,0 +1,1 @@
+java -cp dist/robotrader.jar;lib/jakarta-regexp-1.4.jar;lib/jcommon-1.0.0.jar;lib/jfreechart-1.0.1.jar;lib/nanoxml-2.2.3.jar robotrader.quotedb.web.UpdateQuotesMain conf/tickers.txt conf/quotes.xml FR

@@ -1,0 +1,20 @@
+/AbstractAppMainView.java/1.3/Wed Mar  8 06:14:47 2006//
+/AbstractGUIApplication.java/1.1/Wed Aug 20 18:20:25 2003//
+/AbstractSwingModule.java/1.1/Wed Aug 20 18:20:25 2003//
+/BaseGUIModule.java/1.2/Sat Mar 18 18:22:43 2006//
+/DefaultAppMainView.java/1.2/Tue Oct  4 21:44:29 2005//
+/DefaultViewComponent.java/1.2/Sat Mar 18 18:22:45 2006//
+/GUIToolkit.java/1.3/Wed Mar  8 06:14:47 2006//
+/IDetailedWindow.java/1.1/Tue Mar  7 18:19:46 2006//
+/IDialog.java/1.1/Tue Mar  7 18:19:46 2006//
+/ILayoutManager.java/1.1/Wed Aug 20 18:20:25 2003//
+/IView.java/1.2/Sun May  7 15:02:51 2006//
+/IViewComponent.java/1.2/Sat Mar 18 18:22:46 2006//
+/IViewComponentEvent.java/1.1/Sat Mar 18 18:22:46 2006//
+/IWindow.java/1.1/Tue Mar  7 18:19:46 2006//
+/IWindowManager.java/1.1/Tue Mar  7 18:19:46 2006//
+/UserLayoutService.java/1.3/Tue Aug 15 09:46:15 2006//
+D/mdi////
+D/outlook////
+/package.html/1.1/Wed Aug 20 18:20:25 2003//
+D/simple////
